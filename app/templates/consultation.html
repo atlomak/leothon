@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<head>
+  <title>OpenAI Quickstart</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}" />
+</head>
+
+<body>
+  <h3>Wpisz dane pacjenta</h3>
+  <form action="/" method="post">
+    <input type="text" name="Name" placeholder="Enter patient's name"  pattern="[A-Za-z]+" minlength="2" maxlength="30" required oninvalid="this.setCustomValidity('Please enter valid Name')" oninput="setCustomValidity('')" />
+    <input type="text" name="Surname" placeholder="Enter patient's surname" pattern="[A-Za-z]+" minlength="2" maxlength="30" required oninvalid="this.setCustomValidity('Please enter valid Surname')" oninput="setCustomValidity('')" />
+    <input type="text" name="PESEL" placeholder="Enter patient's PESEL" pattern="[0-9]+" minlength="11" maxlength="11" required oninvalid="this.setCustomValidity('Please enter valid PESEL')" oninput="setCustomValidity('')" />
+    <input type="text" name="Zip_Code" placeholder="Enter patient's Zip Code" pattern="^\d{2}-\d{3}$"  required oninvalid="this.setCustomValidity('Please enter valid Zip code')" oninput="setCustomValidity('')" />
+    <input type="text" name="City" placeholder="Enter patient's City" pattern="[A-Za-z]+" minlength="2" maxlength="30" required oninvalid="this.setCustomValidity('Please enter valid City')" oninput="setCustomValidity('')" />
+    <input type="text" name="Street" placeholder="Enter patient's Street" pattern="[A-Za-z]+" minlength="2" maxlength="30" required oninvalid="this.setCustomValidity('Please enter valid Street')" oninput="setCustomValidity('')" />
+    <input type="text" name="House_number" placeholder="Enter patient's House number" pattern="[0-9]+"minlength="1" maxlength="4" required oninvalid="this.setCustomValidity('Please enter valid House number')" oninput="setCustomValidity('')" />
+    <input type="text" name="Information" placeholder="Enter information about patient" required minlength="100" required oninvalid="this.setCustomValidity('Please provide more information about patient')" oninput="setCustomValidity('')" />
+    <input type="submit" value="Generate documentation" />
+  </form>
+</body>
+</html>
