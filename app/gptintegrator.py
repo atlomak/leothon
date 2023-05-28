@@ -1,10 +1,12 @@
 import os
 
 import openai
+
 openai.api_type = "azure"
 openai.api_version = "2022-12-01"
 openai.api_base = os.getenv("OPENAI_ENDPOINT")
 openai.api_key = os.getenv("OPENAI_API_KEY")
+
 
 def get_openai_response(prompt: str):
     response = openai.Completion.create(

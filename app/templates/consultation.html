@@ -1,15 +1,133 @@
-{% extends "index.html" %}
+<!DOCTYPE html>
+<html lang="pl">
 
-{% block content %}
-    <div class="form-container">
-       <h3>Wpisz dane pacjenta</h3>
-      <form action="/renderDocument" method="post">
-        <input type="text" name="Name" placeholder="Enter patient's name" />
-        <input type="text" name="Surname" placeholder="Enter patient's surname"/>
-        <input type="text" name="PESEL" placeholder="Enter patient's PESEL" />
-        <input type="text" name="Zip_Code" placeholder="Enter patient's Zip Code"  />
-        <input type="text" name="audio_desc" placeholder="Enter text from visit"  />
-        <input type="submit" value="Generate documentation" />
-      </form>
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Panel pacjenta</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .patient-form {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .patient-form .form-group label {
+            font-weight: bold;
+        }
+
+        .record-button {
+            margin-top: 10px;
+        }
+
+        .recording-status {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 mx-auto">
+            <div class="patient-form">
+                <h3>Formularz pacjenta</h3>
+                <form id="patientForm">
+                    <div class="form-group">
+                        <label for="firstName">Imię:</label>
+                        <input class="form-control" id="firstName" required type="text">
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Nazwisko:</label>
+                        <input class="form-control" id="lastName" required type="text">
+                    </div>
+                    <div class="form-group">
+                        <label for="pesel">PESEL:</label>
+                        <input class="form-control" id="pesel" required type="text">
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-primary" id="recordButton" type="button">Rozpocznij nagrywanie</button>
+                        <button class="btn btn-primary" id="stopButton" type="button">Stop</button>
+                        <button class="btn btn-primary" id="sendButton" type="button">Wyślij</button>
+                    </div>
+                    <div class="recording-status" id="recordingStatus"></div>
+                </form>
+            </div>
+        </div>
     </div>
-{% endblock %}
+</div>
+
+<script>
+    const recordButton = document.getElementById('recordButton');
+    const stopButton = document.getElementById('stopButton');
+    const sendButton = document.getElementById('sendButton');
+
+    let mediaRecorder;
+    let chunks = [];
+
+    recordButton.addEventListener('click', startRecording);
+    stopButton.addEventListener('click', stopRecording);
+    sendButton.addEventListener('click', sendRecording);
+
+    function startRecording() {
+        navigator.mediaDevices.getUserMedia({audio: true})
+            .then(stream => {
+                mediaRecorder = new MediaRecorder(stream);
+                mediaRecorder.start();
+
+                recordButton.textContent = 'Zatrzymaj nagrywanie';
+                recordButton.disabled = true;
+                stopButton.disabled = false;
+
+                chunks = [];
+
+                mediaRecorder.addEventListener('dataavailable', event => {
+                    chunks.push(event.data);
+                });
+            })
+            .catch(error => {
+                console.error('Błąd podczas uzyskiwania dostępu do mikrofonu:', error);
+            });
+    }
+
+    function stopRecording() {
+        mediaRecorder.stop();
+
+        recordButton.disabled = false;
+        stopButton.disabled = true;
+        sendButton.disabled = false;
+
+        recordButton.textContent = 'Rozpocznij nagrywanie';
+    }
+
+    function sendRecording() {
+        const blob = new Blob(chunks, {type: 'audio/webm'});
+
+        const formData = new FormData();
+        formData.append('audio', blob, 'recording.webm');
+
+        const firstName = document.getElementById('firstName').value;
+        const lastName = document.getElementById('lastName').value;
+        const pesel = document.getElementById('pesel').value;
+
+        formData.append('firstName', firstName);
+        formData.append('lastName', lastName);
+        formData.append('pesel', pesel);
+
+        fetch('/upload_audio', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => {
+                // Obsługa odpowiedzi od serwera
+                console.log('Dane audio przesłane na serwer');
+            })
+            .catch(error => {
+                console.error('Błąd podczas przesyłania danych audio na serwer:', error);
+            });
+    }
+
+</script>
+</body>
+
+</html>

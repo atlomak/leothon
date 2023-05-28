@@ -1,39 +1,64 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>MedDocs AI</title>
-    <<link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <title>Strona główna</title>
+  <style>
+    .fade-in {
+      opacity: 0;
+      transition: opacity 0.5s;
+    }
+
+    .fade-in.active {
+      opacity: 1;
+    }
+
+    .pulse-btn {
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.7);
+      }
+      70% {
+        transform: scale(1.2);
+        box-shadow: 0 0 0 10px rgba(0, 123, 255, 0);
+      }
+      100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(0, 123, 255, 0);
+      }
+    }
+
+  </style>
 </head>
 <body>
-    <header>
-        <div class="header-content">
-            <img src="static/logo.png" alt="Logo" />
-            <h1>Modern solutions for medical Burocracy</h1>
-            <button class="button">Wyloguj</button>
-        </div>
+    {% include 'nav.html' %}
 
-    </header>
+  <div class="container mt-5">
+    <div class="jumbotron fade-in" id="welcome-section">
+      <h1 class="display-4">{{ user.name }}</h1>
+      <p class="lead">Jesteś zalogowany jako lekarz.</p>
+    </div>
+  </div>
 
-    <main>
-        <aside>
-            <img src="static/doctor_photo.jpg" alt="Lekarz" class="logo">
-            <h2>Dr Jan Kowalski</h2>
-            <nav class="sidebar">
-                <ul>
-                    <li><a href="/">Strona główna</a></li>
-                    <li><a href="/consultation">Konsultacje</a></li>
-                    <li><a href="/documents">Dokumentacje</a></li>
-                    <li><a href="/calendar">Kalendarz</a></li>
-                    <li><a href="/settings">Ustawienia</a></li>
-                    <li><a href="/faq">Pomoc/FAQ</a></li>
-                </ul>
-            </nav>
-        </aside>
+  <div class="container">
+      <div class="col-md-6">
+        <a class="btn btn-primary pulse-btn" href="/consultation">Rozpocznij konsultację</a>
+      </div>
+  </div>
 
-        <div class="content">
-            {% block content %}{% endblock %}
-        </div>
-    </main>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var welcomeSection = document.getElementById('welcome-section');
+      welcomeSection.classList.add('active');
+    });
+  </script>
 </body>
 </html>

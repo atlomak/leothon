@@ -10,9 +10,11 @@ app = Flask(__name__)
 def consultation():
     return render_template("consultation.html")
 
+
 @app.route("/", methods=["GET", "PUT"])
 def index():
-    return render_template("index.html")
+    return render_template("index.html", user={"name": "Josh", "surname": "Giibun"})
+
 
 @app.route("/renderDocument", methods=["POST"])
 def renderDocument():
@@ -32,6 +34,19 @@ def renderDocument():
         as_attachment=True,
         attachment_filename='report.docx'
     )
+
+
+@app.route("/upload_audio", methods=["POST"])
+def get_audio():
+    file = request.files["audio"]
+    patient_data = {
+        "name": request.form["firstName"],
+        "surname": request.form["lastName"],
+        "pesel": request.form["pesel"],
+    }
+    with open("audio.wav", "wb") as f:
+        f.write(file.read())
+    return "200"
 
 
 def get_static_data():
