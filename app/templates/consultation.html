@@ -1,17 +1,14 @@
-<!DOCTYPE html>
-<head>
-  <title>OpenAI Quickstart</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}" />
-</head>
+{% extends "index.html" %}
 
-<body>
-  <h3>Wpisz dane pacjenta</h3>
-  <form action="/" method="post">
-    <input type="text" name="Name" placeholder="Enter patient's name" />
-    <input type="text" name="Surname" placeholder="Enter patient's surname"/>
-    <input type="text" name="PESEL" placeholder="Enter patient's PESEL" />
-    <input type="text" name="Zip_Code" placeholder="Enter patient's Zip Code"  />
-    <input type="submit" value="Generate documentation" />
-  </form>
-</body>
-</html>
+{% block content %}
+    <div class="form-container">
+       <h3>Wpisz dane pacjenta</h3>
+      <form action="/renderDocument" method="post">
+        <input type="text" name="Name" placeholder="Enter patient's name" />
+        <input type="text" name="Surname" placeholder="Enter patient's surname"/>
+        <input type="text" name="PESEL" placeholder="Enter patient's PESEL" />
+        <input type="text" name="Zip_Code" placeholder="Enter patient's Zip Code"  />
+        <input type="submit" value="Generate documentation" />
+      </form>
+    </div>
+{% endblock %}
