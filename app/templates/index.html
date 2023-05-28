@@ -8,25 +8,25 @@
 <body>
     <header>
         <div class="header-content">
-            <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" />
-            <h1>MedDocs AI</h1>
-            <p>Hasło - motto</p>
+            <img src="static/logo.png" alt="Logo" />
+            <h1>Modern solutions for medical Burocracy</h1>
+            <button class="button">Wyloguj</button>
         </div>
-        <button class="button">Wyloguj</button>
+
     </header>
 
     <main>
         <aside>
-            <img src="doctor_photo.jpg" alt="Lekarz">
+            <img src="static/doctor_photo.jpg" alt="Lekarz" class="logo">
             <h2>Dr Jan Kowalski</h2>
-            <nav>
+            <nav class="sidebar">
                 <ul>
                     <li><a href="/">Strona główna</a></li>
-                    <li><a href="/consultations">Konsultacje</a></li>
+                    <li><a href="/consultation">Konsultacje</a></li>
                     <li><a href="/documents">Dokumentacje</a></li>
                     <li><a href="/calendar">Kalendarz</a></li>
                     <li><a href="/settings">Ustawienia</a></li>
-                    <li><a href="/help">Pomoc/FAQ</a></li>
+                    <li><a href="/faq">Pomoc/FAQ</a></li>
                 </ul>
             </nav>
         </aside>
