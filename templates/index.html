@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>MedDocs AI</title>
+    <<link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}" />
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" />
+            <h1>MedDocs AI</h1>
+            <p>Hasło - motto</p>
+        </div>
+        <button class="button">Wyloguj</button>
+    </header>
+
+    <main>
+        <aside>
+            <img src="doctor_photo.jpg" alt="Lekarz">
+            <h2>Dr Jan Kowalski</h2>
+            <nav>
+                <ul>
+                    <li><a href="/">Strona główna</a></li>
+                    <li><a href="/consultations">Konsultacje</a></li>
+                    <li><a href="/documents">Dokumentacje</a></li>
+                    <li><a href="/calendar">Kalendarz</a></li>
+                    <li><a href="/settings">Ustawienia</a></li>
+                    <li><a href="/help">Pomoc/FAQ</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <div class="content">
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+</body>
+</html>

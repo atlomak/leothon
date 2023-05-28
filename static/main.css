@@ -1,66 +1,80 @@
-@font-face {
-  font-family: "ColfaxAI";
-  src: url(https://cdn.openai.com/API/fonts/ColfaxAIRegular.woff2)
-      format("woff2"),
-    url(https://cdn.openai.com/API/fonts/ColfaxAIRegular.woff) format("woff");
-  font-weight: normal;
-  font-style: normal;
-}
-@font-face {
-  font-family: "ColfaxAI";
-  src: url(https://cdn.openai.com/API/fonts/ColfaxAIBold.woff2) format("woff2"),
-    url(https://cdn.openai.com/API/fonts/ColfaxAIBold.woff) format("woff");
-  font-weight: bold;
-  font-style: normal;
-}
-body,
-input {
-  font-size: 16px;
-  line-height: 24px;
-  color: #353740;
-  font-family: "ColfaxAI", Helvetica, sans-serif;
-}
 body {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-top: 60px;
+    font-family: Arial, sans-serif;
 }
-.icon {
-  width: 34px;
+
+header {
+    height: 20%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #219DD9;
+    padding: 10px;
+    border-bottom: 2px solid #000;
 }
-h3 {
-  font-size: 32px;
-  line-height: 40px;
-  font-weight: bold;
-  color: #202123;
-  margin: 16px 0 40px;
+
+header .header-content {
+    display: flex;
+    align-items: center;
 }
-form {
-  display: flex;
-  flex-direction: column;
-  width: 320px;
+
+header .header-content img {
+    height: 50px;
 }
-input[type="text"] {
-  padding: 12px 16px;
-  border: 1px solid #10a37f;
-  border-radius: 4px;
-  margin-bottom: 24px;
+
+header .header-content h1 {
+    margin-left: 10px;
 }
-::placeholder {
-  color: #8e8ea0;
-  opacity: 1;
+
+header button {
+    padding: 10px;
 }
-input[type="submit"] {
-  padding: 12px 0;
-  color: #fff;
-  background-color: #10a37f;
-  border: none;
-  border-radius: 4px;
-  text-align: center;
-  cursor: pointer;
+
+main {
+    display: flex;
+    height: 80%;
 }
-.result {
-  font-weight: bold;
-  margin-top: 40px;
+
+aside {
+    width: 20%;
+    background-color: #ddd;
+    padding: 10px;
+}
+
+aside img {
+    width: 100%;
+}
+
+aside h2 {
+    margin-top: 10px;
+}
+
+aside nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+aside nav ul li a {
+    text-decoration: none;
+    color: #000;
+}
+
+.content {
+    width: 80%;
+    padding: 10px;
+}
+.button {
+    background-color: #219DD9; /* Twoje specyficzne kolor tła */
+    border: none;
+    color: white; /* Kolor tekstu */
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    padding: 15px 32px;
+    text-decoration: none;
+}
+
+.button:hover {
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
 }
