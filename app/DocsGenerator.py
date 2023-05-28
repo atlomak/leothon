@@ -19,7 +19,7 @@ class DocsGenerator:
 
         logo_paragraph = document.add_paragraph()
         logo_run = logo_paragraph.add_run()
-        logo_run.add_picture("app/static/example_logo.jpg", width=Inches(1))
+        logo_run.add_picture("./static/example_logo.jpg", width=Inches(1))
 
         title_paragraph = document.add_paragraph()
         title_paragraph.alignment = WD_PARAGRAPH_ALIGNMENT.RIGHT
@@ -48,4 +48,5 @@ class DocsGenerator:
 
         document_buffer = BytesIO()
         document.save(document_buffer)
+        document_buffer.seek(0)
         return document_buffer
