@@ -1,21 +1,18 @@
-import os
-
-import openai
 from flask import Flask, render_template, request, send_file
 
-from app.DocsGenerator import DocsGenerator
+from .DocsGenerator import DocsGenerator
+from .gptintegrator import get_openai_response
 
 app = Flask(__name__)
-openai.api_type = "azure"
-openai.api_version = "2022-12-01"
-openai.api_base = "https://leothon4.openai.azure.com/"  # Your Azure OpenAI resource's endpoint value.
-openai.api_key = os.getenv("OPENAI_API_KEY")
 
 
 @app.route("/consultation", methods=["GET"])
 def consultation():
     return render_template("consultation.html")
 
+@app.route("/", methods=["GET", "PUT"])
+def index():
+    return render_template("index.html")
 
 @app.route("/renderDocument", methods=["POST"])
 def renderDocument():
@@ -26,7 +23,10 @@ def renderDocument():
         "pesel": request.form["PESEL"],
         "address": request.form["Zip_Code"]
     }
-    docs = generator.generate_docs(patient_data=patient_data, gpt_response="Test")
+    audio_desc = request.form["audio_desc"]
+    docs = generator.generate_docs(patient_data=patient_data,
+                                   gpt_response=get_openai_response(audio_desc))
+
     return send_file(
         docs,
         as_attachment=True,
