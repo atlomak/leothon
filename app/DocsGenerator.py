@@ -1,3 +1,4 @@
+import datetime
 from io import BytesIO
 
 from docx import Document
@@ -10,7 +11,7 @@ class DocsGenerator:
         self.header = static_data["header"]
         self.footer = static_data["footer"]
 
-    def generate_docs(self, patient_data: dict, gpt_response: str):
+    def generate_docs(self, patient_data: dict, gpt_sympthoms: str, gpt_recommendations: str):
         document = Document()
 
         sections = document.sections
@@ -27,20 +28,22 @@ class DocsGenerator:
         title_run.bold = True
 
         patient = document.add_paragraph()
-        patient.add_run("Name: ").bold = True
+        patient.add_run("Imie: ").bold = True
         patient.add_run(patient_data["name"] + "\n")
-        patient.add_run("Surname: ").bold = True
+        patient.add_run("Nazwisko: ").bold = True
         patient.add_run(patient_data["surname"] + "\n")
         patient.add_run("PESEL: ").bold = True
         patient.add_run(patient_data["pesel"] + "\n")
-        patient.add_run("Address: ").bold = True
+        patient.add_run("Adres: ").bold = True
         patient.add_run(patient_data["address"] + "\n")
+        patient.add_run("Data: ").bold = True
+        patient.add_run(str(datetime.datetime.utcnow()) + "\n")
 
         document.add_heading("SYMPTHOMS/PATIENT INTERVIEW", level=1)
-        document.add_paragraph(gpt_response)
+        document.add_paragraph(gpt_sympthoms)
 
         document.add_heading("RECOMMENDATIONS", level=1)
-        document.add_paragraph("***** TO BE FILLED BY THE DOCTOR *****")
+        document.add_paragraph(gpt_recommendations)
 
         footer_paragraph = document.sections[-1].footer.paragraphs[0]
         footer_paragraph.text = self.footer
