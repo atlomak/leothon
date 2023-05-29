@@ -4,7 +4,7 @@ import whisper
 from flask import Flask, render_template, request, send_file, session, redirect
 
 from .DocsGenerator import DocsGenerator
-from .gptintegrator import get_openai_response
+from .gptintegrator import get_openai_sympthoms, get_openai_recommendations
 
 app = Flask(__name__)
 
@@ -76,7 +76,8 @@ def get_audio():
         f.write(file.read())
     audio_desc = get_transcription()
     docs = generator.generate_docs(patient_data=patient_data,
-                                   gpt_response=get_openai_response(audio_desc))
+                                   gpt_sympthoms=get_openai_sympthoms(audio_desc),
+                                   gpt_recommendations=get_openai_recommendations(audio_desc))
 
     return send_file(
         docs,
