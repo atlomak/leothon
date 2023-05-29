@@ -1,7 +1,7 @@
 import os
 
-from flask import Flask, render_template, request, send_file, session
-
+from flask import Flask, redirect, render_template, request, send_file, session
+import whisper
 from .DocsGenerator import DocsGenerator
 from .gptintegrator import get_openai_response
 
@@ -47,7 +47,7 @@ def renderDocument():
     }
     audio_desc = request.form["audio_desc"]
     docs = generator.generate_docs(patient_data=patient_data,
-                                   gpt_response=get_openai_response(audio_desc))
+                                   gpt_response=get_openai_response(get_transcription()))
 
     return send_file(
         docs,
@@ -66,8 +66,13 @@ def get_audio():
     }
     with open("audio.wav", "wb") as f:
         f.write(file.read())
-    return "200"
+    audio_desc = get_transcription()
+    return redirect("/consultation")
 
+def get_transcription():
+    model = whisper.load_model("base")
+    audio_desc = model.transcribe(audio="audio.wav", temperature=0.7, verbose=0, language="polish")["text"]
+    return audio_desc
 
 def get_static_data():
     static_data = {
