@@ -25,8 +25,7 @@ def get_openai_recommendations(prompt: str):
     response = openai.Completion.create(
         engine="TextDaVinci003",
         prompt=f"""
-        Podsumuj zalecenia lekarza, oraz leki jakie powinien przyjmować pacjent na podstawie transkrypcji rozmowy w pojedyńczych prostych zdaniach/słowach.
-        Przykład: Ibuprofen 2 razy dziennie. Lek przeciwgorączkowy Noctra 3 razy dziennie.
+        Podsumuj zalecenia lekarza oraz jakie leki powinien przyjmować pacjent na podstawie rozmowy. Nie dodawaj nic od siebie! Napisz bardzo zwięźle.
         Rozmowa: {prompt}
         """,
         max_tokens=750,

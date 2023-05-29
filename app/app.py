@@ -88,8 +88,7 @@ def get_audio():
 
 def get_transcription():
     model = whisper.load_model("base")
-    audio_desc = model.transcribe(audio="audio.wav", temperature=0.7, verbose=0, language="polish")["text"]
-    print(audio_desc)
+    audio_desc = model.transcribe(audio="audio.wav", temperature=0.2, verbose=0, language="polish")["text"]
     return audio_desc
 
 

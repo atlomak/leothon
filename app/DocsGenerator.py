@@ -20,11 +20,11 @@ class DocsGenerator:
 
         logo_paragraph = document.add_paragraph()
         logo_run = logo_paragraph.add_run()
-        logo_run.add_picture("./static/example_logo.jpg", width=Inches(1))
+        logo_run.add_picture("./static/logo.png", width=Inches(1))
 
         title_paragraph = document.add_paragraph()
         title_paragraph.alignment = WD_PARAGRAPH_ALIGNMENT.RIGHT
-        title_run = title_paragraph.add_run("APPOINTMENT CARD")
+        title_run = title_paragraph.add_run("KARTA WIZYTY")
         title_run.bold = True
 
         patient = document.add_paragraph()
@@ -36,8 +36,8 @@ class DocsGenerator:
         patient.add_run(patient_data["pesel"] + "\n")
         patient.add_run("Adres: ").bold = True
         patient.add_run(patient_data["address"] + "\n")
-        patient.add_run("Data: ").bold = True
-        patient.add_run(str(datetime.datetime.utcnow().day) + "\n")
+        patient.add_run("Data wygenerowania dokumentu: ").bold = True
+        patient.add_run(str(datetime.datetime.today()) + "\n")
 
         document.add_heading("WYWIAD Z PACJENTEM", level=1)
         document.add_paragraph(gpt_sympthoms)
