@@ -1,4 +1,6 @@
-from flask import Flask, render_template, request, send_file
+import os
+
+from flask import Flask, render_template, request, send_file, session
 
 from .DocsGenerator import DocsGenerator
 from .gptintegrator import get_openai_response
@@ -13,8 +15,26 @@ def consultation():
 
 @app.route("/", methods=["GET", "PUT"])
 def index():
-    return render_template("index.html", user={"name": "Josh", "surname": "Giibun"})
+    if "user" in session:
+        return render_template("index.html", user=session["user"])
+    else:
+        return render_template("login.html")
 
+app.secret_key = os.getenv("SECRET_KEY")
+@app.route("/login", methods=["POST"])
+def login():
+    login = request.form["name"]
+    password = request.form["password"]
+    if login == "admin" and password == "admin":
+        session["user"] = {"name": "admin", "surname": "admin"}
+        return render_template("index.html", user=session["user"])
+    else:
+        return "Wrong login or password"
+
+@app.route("/logout", methods=["GET"])
+def logout():
+    session.pop("user", None)
+    return render_template("login.html")
 
 @app.route("/renderDocument", methods=["POST"])
 def renderDocument():
