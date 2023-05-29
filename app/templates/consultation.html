@@ -160,8 +160,24 @@
                 // Ukryj napis po otrzymaniu odpowiedzi od serwera
                 loadingText.style.display = 'none';
 
-                // Obsługa odpowiedzi od serwera
-                console.log('Dane audio i dane pacjenta przesłane na serwer');
+                // Pobierz plik Word z odpowiedzi
+                return response.blob();
+            })
+            .then(blob => {
+                // Utwórz link do pobrania pliku
+                const downloadLink = document.createElement('a');
+                const url = URL.createObjectURL(blob);
+                downloadLink.href = url;
+                downloadLink.download = 'document.docx';
+
+                // Symuluj kliknięcie linku, aby rozpocząć pobieranie pliku
+                downloadLink.click();
+
+                // Zwolnij zasoby URL
+                URL.revokeObjectURL(url);
+
+                // Obsługa zakończenia pobierania
+                console.log('Pobieranie pliku Word zakończone');
             })
             .catch(error => {
                 console.error('Błąd podczas przesyłania danych audio i danych pacjenta na serwer:', error);
