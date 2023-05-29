@@ -37,12 +37,12 @@ class DocsGenerator:
         patient.add_run("Adres: ").bold = True
         patient.add_run(patient_data["address"] + "\n")
         patient.add_run("Data: ").bold = True
-        patient.add_run(str(datetime.datetime.utcnow()) + "\n")
+        patient.add_run(str(datetime.datetime.utcnow().day) + "\n")
 
-        document.add_heading("SYMPTHOMS/PATIENT INTERVIEW", level=1)
+        document.add_heading("WYWIAD Z PACJENTEM", level=1)
         document.add_paragraph(gpt_sympthoms)
 
-        document.add_heading("RECOMMENDATIONS", level=1)
+        document.add_heading("ZALECENIA", level=1)
         document.add_paragraph(gpt_recommendations)
 
         footer_paragraph = document.sections[-1].footer.paragraphs[0]
