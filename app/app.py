@@ -67,10 +67,10 @@ def get_audio():
     generator = DocsGenerator(static_data=get_static_data())
     file = request.files["audio"]
     patient_data = {
-        "name": request.form["Name"],
-        "surname": request.form["Surname"],
-        "pesel": request.form["PESEL"],
-        "address": request.form["Zip_Code"]
+        "name": request.form["firstName"],
+        "surname": request.form["lastName"],
+        "pesel": request.form["pesel"],
+        "address": request.form["address"]
     }
     with open("audio.wav", "wb") as f:
         f.write(file.read())

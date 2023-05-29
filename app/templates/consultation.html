@@ -66,8 +66,8 @@
                         <input class="form-control" id="pesel" required type="text">
                     </div>
                     <div class="form-group">
-                        <label for="pesel">Adres Pacjenta:</label>
-                        <input class="form-control" id="address" required type="text">
+                        <label for="address">Adres Pacjenta:</label>
+                        <input class="form-control" id="address" name="address" required type="text">
                     </div>
                     <div class="form-group">
                         <button class="btn btn-primary" id="recordButton" type="button">Rozpocznij nagrywanie</button>
@@ -135,11 +135,13 @@
         const firstName = document.getElementById('firstName').value;
         const lastName = document.getElementById('lastName').value;
         const pesel = document.getElementById('pesel').value;
+        const address = document.getElementById('address').value;
 
         // Dodaj dane pacjenta do obiektu FormData
         formData.append('firstName', firstName);
         formData.append('lastName', lastName);
         formData.append('pesel', pesel);
+        formData.append('address', address);
 
         // Pobierz element napisu
         const loadingText = document.getElementById('loadingText');
