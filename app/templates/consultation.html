@@ -23,6 +23,25 @@
         .recording-status {
             margin-top: 10px;
         }
+
+        @keyframes pulsate {
+            0% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.5;
+                transform: scale(1.1);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .pulsate {
+            animation: pulsate 1s ease-in-out infinite;
+        }
     </style>
 </head>
 
@@ -51,6 +70,7 @@
                         <button class="btn btn-primary" id="stopButton" type="button">Stop</button>
                         <button class="btn btn-primary" id="sendButton" type="button">Wyślij</button>
                     </div>
+                    <span id="loadingText" style="display: none">Trwa generowanie dokumentu...</span>
                     <div class="recording-status" id="recordingStatus"></div>
                 </form>
             </div>
@@ -107,26 +127,41 @@
         const formData = new FormData();
         formData.append('audio', blob, 'recording.webm');
 
+        // Pobierz dane pacjenta z formularza
         const firstName = document.getElementById('firstName').value;
         const lastName = document.getElementById('lastName').value;
         const pesel = document.getElementById('pesel').value;
 
+        // Dodaj dane pacjenta do obiektu FormData
         formData.append('firstName', firstName);
         formData.append('lastName', lastName);
         formData.append('pesel', pesel);
+
+        // Pobierz element napisu
+        const loadingText = document.getElementById('loadingText');
+
+        // Wyświetl napis przed wysłaniem żądania
+        loadingText.style.display = 'block';
 
         fetch('/upload_audio', {
             method: 'POST',
             body: formData
         })
             .then(response => {
+                // Zatrzymaj animację pulsowania
+                loadingText.classList.remove('pulsate');
+
+                // Ukryj napis po otrzymaniu odpowiedzi od serwera
+                loadingText.style.display = 'none';
+
                 // Obsługa odpowiedzi od serwera
-                console.log('Dane audio przesłane na serwer');
+                console.log('Dane audio i dane pacjenta przesłane na serwer');
             })
             .catch(error => {
-                console.error('Błąd podczas przesyłania danych audio na serwer:', error);
+                console.error('Błąd podczas przesyłania danych audio i danych pacjenta na serwer:', error);
             });
     }
+
 
 </script>
 </body>
